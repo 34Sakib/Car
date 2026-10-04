@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D77F"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#996F08"/>
+    </linearGradient>
+    <linearGradient id="darkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F141E"/>
+      <stop offset="100%" stop-color="#06080D"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Shield / Emblem Background -->
+  <rect width="64" height="64" rx="16" fill="url(#darkBg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="url(#goldGrad)" stroke-width="1.5" stroke-opacity="0.4"/>
+  
+  <!-- Supercar Aerodynamic Profile Silhouette -->
+  <path d="M10 40C14 40 18 36 21 34L28 25C31 23 37 23 44 26L52 33C54 35 55 38 55 40H10Z" fill="url(#goldGrad)" fill-opacity="0.15"/>
+  <path d="M8 40C12 40 16 38 20 34L27 25C30 22 37 22 45 25L53 32C56 34 57 37 57 40H7" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Windshield Cockpit line -->
+  <path d="M25 33L30 26C32 24 37 24 43 27L46 33" stroke="url(#goldGrad)" stroke-width="1.8" stroke-linecap="round"/>
+  
+  <!-- Wheels -->
+  <circle cx="19" cy="40" r="5" fill="#0A0D14" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="19" cy="40" r="2" fill="url(#goldGrad)"/>
+  <circle cx="47" cy="40" r="5" fill="#0A0D14" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="47" cy="40" r="2" fill="url(#goldGrad)"/>
+  
+  <!-- Headlight beam micro-accent -->
+  <path d="M54 36L58 35.5" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+</svg>
