@@ -170,6 +170,7 @@ export default function CarModel({
     // 2. Alternating Section Placement
     if (!isEntering.current) {
       const p = Math.min(1, Math.max(0, scrollProgress));
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
       // Smoothstep interpolation helper
       const smoothstep = (min: number, max: number, value: number) => {
@@ -179,9 +180,14 @@ export default function CarModel({
 
       const lerp = THREE.MathUtils.lerp;
 
+      // On mobile screens, scale down and use subtle horizontal shifts + elevated vertical framing
+      const sideOffset = isMobile ? 0.35 : 1.95;
+      const yElevate = isMobile ? 0.45 : 0;
+      const targetScale = isMobile ? 0.72 : 1.0;
+
       let targetX = 0;
-      let targetY = 0;
-      let targetZ = 0;
+      let targetY = yElevate;
+      let targetZ = isMobile ? -0.2 : 0;
       let targetRotY = Math.PI - 0.45;
       let targetRotX = 0;
 
@@ -190,97 +196,97 @@ export default function CarModel({
       if (p < 0.12) {
         // Stage 0: Hero Stage (Car is centered, front 3/4 pose)
         targetX = 0;
-        targetY = 0;
-        targetZ = 0;
+        targetY = isMobile ? 0.25 : 0;
+        targetZ = isMobile ? -0.2 : 0;
         targetRotY = Math.PI - 0.45;
         targetRotX = 0;
       } else if (p < 0.15) {
         // Prompt Transition 0 -> 1: Glide to the RIGHT side
         const t = smoothstep(0.12, 0.15, p);
-        targetX = lerp(0, 1.95, t);
-        targetY = lerp(0, -0.05, t);
-        targetZ = lerp(0, 0.1, t);
+        targetX = lerp(0, sideOffset, t);
+        targetY = lerp(isMobile ? 0.25 : 0, yElevate - 0.05, t);
+        targetZ = lerp(isMobile ? -0.2 : 0, isMobile ? 0 : 0.1, t);
         targetRotY = lerp(Math.PI - 0.45, Math.PI - 0.75, t);
         targetRotX = lerp(0, 0.015, t);
       } else if (p < 0.28) {
         // Stage 1: Propulsion Architecture (Text on Left -> Car stays on RIGHT)
-        targetX = 1.95;
-        targetY = -0.05;
-        targetZ = 0.1;
+        targetX = sideOffset;
+        targetY = yElevate - 0.05;
+        targetZ = isMobile ? 0 : 0.1;
         targetRotY = Math.PI - 0.75;
         targetRotX = 0.015;
       } else if (p < 0.31) {
         // Prompt Transition 1 -> 2: Glide to the LEFT side
         const t = smoothstep(0.28, 0.31, p);
-        targetX = lerp(1.95, -1.95, t);
-        targetY = lerp(-0.05, 0, t);
-        targetZ = lerp(0.1, 0.1, t);
+        targetX = lerp(sideOffset, -sideOffset, t);
+        targetY = lerp(yElevate - 0.05, yElevate, t);
+        targetZ = lerp(isMobile ? 0 : 0.1, isMobile ? 0 : 0.1, t);
         targetRotY = lerp(Math.PI - 0.75, Math.PI / 2 + 0.35, t);
         targetRotX = lerp(0.015, 0, t);
       } else if (p < 0.44) {
         // Stage 2: Aerodynamics & Optics (Text on Right -> Car stays on LEFT)
-        targetX = -1.95;
-        targetY = 0;
-        targetZ = 0.1;
+        targetX = -sideOffset;
+        targetY = yElevate;
+        targetZ = isMobile ? 0 : 0.1;
         targetRotY = Math.PI / 2 + 0.35;
         targetRotX = 0;
       } else if (p < 0.47) {
         // Prompt Transition 2 -> 3: Glide to the RIGHT side
         const t = smoothstep(0.44, 0.47, p);
-        targetX = lerp(-1.95, 1.95, t);
-        targetY = lerp(0, -0.05, t);
-        targetZ = lerp(0.1, 0.1, t);
+        targetX = lerp(-sideOffset, sideOffset, t);
+        targetY = lerp(yElevate, yElevate - 0.05, t);
+        targetZ = lerp(isMobile ? 0 : 0.1, isMobile ? 0 : 0.1, t);
         targetRotY = lerp(Math.PI / 2 + 0.35, Math.PI - 0.75, t);
         targetRotX = 0;
       } else if (p < 0.60) {
         // Stage 3: Chassis Dynamics & Suspension (Text on Left -> Car stays on RIGHT)
-        targetX = 1.95;
-        targetY = -0.05;
-        targetZ = 0.1;
+        targetX = sideOffset;
+        targetY = yElevate - 0.05;
+        targetZ = isMobile ? 0 : 0.1;
         targetRotY = Math.PI - 0.75;
         targetRotX = 0;
       } else if (p < 0.63) {
         // Prompt Transition 3 -> 4: Glide to LEFT Close-Up for Cockpit
         const t = smoothstep(0.60, 0.63, p);
-        targetX = lerp(1.95, -1.65, t);
-        targetY = lerp(-0.05, -0.08, t);
-        targetZ = lerp(0.1, 0.95, t);
+        targetX = lerp(sideOffset, isMobile ? -0.2 : -1.65, t);
+        targetY = lerp(yElevate - 0.05, yElevate - 0.08, t);
+        targetZ = lerp(isMobile ? 0 : 0.1, isMobile ? 0.35 : 0.95, t);
         targetRotY = lerp(Math.PI - 0.75, Math.PI / 2 + 0.35, t);
         targetRotX = 0;
       } else if (p < 0.76) {
         // Stage 4: The Horizon Cockpit Atelier (Text on Right -> Car stays on LEFT Close-up)
-        targetX = -1.65;
-        targetY = -0.08;
-        targetZ = 0.95;
+        targetX = isMobile ? -0.2 : -1.65;
+        targetY = yElevate - 0.08;
+        targetZ = isMobile ? 0.35 : 0.95;
         targetRotY = Math.PI / 2 + 0.35;
         targetRotX = 0;
       } else if (p < 0.79) {
         // Prompt Transition 4 -> 5: Glide to RIGHT side for Hypercharging
         const t = smoothstep(0.76, 0.79, p);
-        targetX = lerp(-1.65, 1.85, t);
-        targetY = lerp(-0.08, -0.05, t);
-        targetZ = lerp(0.95, 0.2, t);
+        targetX = lerp(isMobile ? -0.2 : -1.65, sideOffset, t);
+        targetY = lerp(yElevate - 0.08, yElevate - 0.05, t);
+        targetZ = lerp(isMobile ? 0.35 : 0.95, isMobile ? 0 : 0.2, t);
         targetRotY = lerp(Math.PI / 2 + 0.35, Math.PI - 0.65, t);
         targetRotX = 0;
       } else if (p < 0.90) {
         // Stage 5: 900V Hypercharging Architecture (Text on Left -> Car stays on RIGHT)
-        targetX = 1.85;
-        targetY = -0.05;
-        targetZ = 0.2;
+        targetX = sideOffset;
+        targetY = yElevate - 0.05;
+        targetZ = isMobile ? 0 : 0.2;
         targetRotY = Math.PI - 0.65;
         targetRotX = 0;
       } else if (p < 0.93) {
         // Prompt Transition 5 -> 6: Re-center for 360 Customizer Studio
         const t = smoothstep(0.90, 0.93, p);
-        targetX = lerp(1.85, 0, t);
-        targetY = lerp(-0.05, 0, t);
-        targetZ = lerp(0.2, 0, t);
+        targetX = lerp(sideOffset, 0, t);
+        targetY = lerp(yElevate - 0.05, isMobile ? 0.15 : 0, t);
+        targetZ = lerp(isMobile ? 0 : 0.2, 0, t);
         targetRotY = lerp(Math.PI - 0.65, Math.PI - 0.45, t);
         targetRotX = 0;
       } else {
         // Stage 6: 360 Bespoke Studio Configurator (Centered turntable)
         targetX = 0;
-        targetY = 0;
+        targetY = isMobile ? 0.15 : 0;
         targetZ = 0;
         targetRotX = 0;
         shouldAutoRotate = true;
@@ -291,6 +297,11 @@ export default function CarModel({
       ref.current.position.y = THREE.MathUtils.lerp(ref.current.position.y, targetY, 0.12);
       ref.current.position.z = THREE.MathUtils.lerp(ref.current.position.z, targetZ, 0.12);
       ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, targetRotX, 0.12);
+
+      // Smooth scale interpolation for mobile vs desktop
+      const currentScale = ref.current.scale.x;
+      const nextScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.12);
+      ref.current.scale.set(nextScale, nextScale, nextScale);
 
       if (shouldAutoRotate) {
         // Smooth turntable rotation in the Bespoke Studio Configurator stage

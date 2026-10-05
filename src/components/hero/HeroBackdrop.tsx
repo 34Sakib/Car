@@ -59,14 +59,14 @@ export default function HeroBackdrop({ scrollProgress = 0 }: { scrollProgress?: 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative flex items-center justify-center whitespace-nowrap px-4 tracking-[-0.03em]"
+        className="relative flex items-center justify-center whitespace-nowrap px-2 sm:px-4 tracking-[-0.03em]"
       >
         {text.split("").map((char, index) => (
           <motion.span
             key={index}
             variants={letterVariants}
-            className={`text-[clamp(4.5rem,17vw,17rem)] font-semibold dark:font-light uppercase leading-none text-neutral-950 dark:text-white/90 drop-shadow-xs ${
-              char === " " ? "w-[clamp(1.5rem,5vw,5rem)]" : ""
+            className={`text-[clamp(2.8rem,14vw,17rem)] font-semibold dark:font-light uppercase leading-none text-neutral-950 dark:text-white/90 drop-shadow-xs ${
+              char === " " ? "w-[clamp(0.8rem,3.5vw,5rem)]" : ""
             }`}
           >
             {char === " " ? "\u00A0" : char}
