@@ -65,7 +65,7 @@ export default function HeroBackdrop({ scrollProgress = 0 }: { scrollProgress?: 
           <motion.span
             key={index}
             variants={letterVariants}
-            className={`text-[clamp(4.5rem,17vw,17rem)] font-light uppercase leading-none text-neutral-900/80 dark:text-white/85 ${
+            className={`text-[clamp(4.5rem,17vw,17rem)] font-semibold dark:font-light uppercase leading-none text-neutral-950 dark:text-white/90 drop-shadow-xs ${
               char === " " ? "w-[clamp(1.5rem,5vw,5rem)]" : ""
             }`}
           >

@@ -47,32 +47,32 @@ export default function VolumetricHeadlights({ headlightsOn = true, isFlashing =
   }, []);
 
   useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    const effectiveBrightness = isFlashing ? 2.5 : headlightsOn ? 1.0 : 0.05;
+    if (!headlightsOn && !isFlashing) return;
 
+    const time = state.clock.getElapsedTime();
     // Subtle micro-pulse for realistic electrical photon shimmer
     const shimmer = 1.0 + Math.sin(time * 20) * 0.02;
 
     if (leftConeRef.current && rightConeRef.current) {
       const coneMat = leftConeRef.current.material as THREE.MeshBasicMaterial;
-      const targetOpacity = headlightsOn ? (isFlashing ? 0.65 : 0.28) * shimmer : 0;
+      const targetOpacity = (isFlashing ? 0.65 : 0.28) * shimmer;
       coneMat.opacity = THREE.MathUtils.lerp(coneMat.opacity, targetOpacity, 0.15);
       (rightConeRef.current.material as THREE.MeshBasicMaterial).opacity = coneMat.opacity;
     }
 
     if (flareLeftRef.current && flareRightRef.current) {
       const flareMat = flareLeftRef.current.material as THREE.MeshBasicMaterial;
-      const targetScale = isFlashing ? 1.4 : headlightsOn ? 1.0 : 0.2;
+      const targetScale = isFlashing ? 1.4 : 1.0;
       const curScale = THREE.MathUtils.lerp(flareLeftRef.current.scale.x, targetScale, 0.2);
       flareLeftRef.current.scale.set(curScale, curScale, curScale);
       flareRightRef.current.scale.set(curScale, curScale, curScale);
-      flareMat.opacity = THREE.MathUtils.lerp(
-        flareMat.opacity,
-        headlightsOn ? (isFlashing ? 1.0 : 0.9) : 0.1,
-        0.2
-      );
+      flareMat.opacity = THREE.MathUtils.lerp(flareMat.opacity, isFlashing ? 1.0 : 0.9, 0.2);
     }
   });
+
+  if (!headlightsOn && !isFlashing) {
+    return null;
+  }
 
   return (
     <group position={[0, 0.52, -1.85]}>

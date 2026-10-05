@@ -56,10 +56,17 @@ export default function CarScene({
 
   return (
     <Canvas
-      dpr={[1, 1.8]}
+      dpr={[1, 1.5]}
+      performance={{ min: 0.5 }}
       shadows={{ type: THREE.PCFShadowMap }}
       camera={{ position: [4.5, 1.6, 6.5], fov: 35 }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: true,
+      }}
       onCreated={({ gl }) => {
         gl.shadowMap.enabled = true;
         gl.shadowMap.type = THREE.PCFShadowMap;

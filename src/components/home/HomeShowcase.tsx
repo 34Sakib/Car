@@ -71,29 +71,6 @@ export default function HomeShowcase() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Determine current storytelling stage based on scroll progress
-  // 0.00 - 0.12: Stage 0 (The Icon)
-  // 0.12 - 0.28: Stage 1 (Propulsion Architecture)
-  // 0.28 - 0.44: Stage 2 (Aerodynamics & Optics)
-  // 0.44 - 0.60: Stage 3 (Chassis Dynamics & Suspension)
-  // 0.60 - 0.76: Stage 4 (The Horizon Cockpit)
-  // 0.76 - 0.90: Stage 5 (900V Hypercharging)
-  // 0.90 - 1.00: Stage 6 (Bespoke Studio Configurator)
-  const currentStage =
-    scrollProgress < 0.12
-      ? 0
-      : scrollProgress < 0.28
-      ? 1
-      : scrollProgress < 0.44
-      ? 2
-      : scrollProgress < 0.60
-      ? 3
-      : scrollProgress < 0.76
-      ? 4
-      : scrollProgress < 0.90
-      ? 5
-      : 6;
-
   return (
     <div ref={containerRef} className="relative w-full bg-background selection:bg-accent/20">
       {/* ========================================================================= */}
@@ -141,28 +118,7 @@ export default function HomeShowcase() {
       )}
 
       {/* ========================================================================= */}
-      {/* 2. FLOATING HUD TELEMETRY BAR (CLEAN STAGE INDICATOR)                      */}
-      {/* ========================================================================= */}
-      <aside className="fixed bottom-6 left-6 z-30 pointer-events-none md:bottom-10 md:left-10 transition-opacity duration-300">
-        <div className="pointer-events-auto flex items-center gap-3 rounded-full border border-border/80 bg-surface/85 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-text-secondary shadow-xs backdrop-blur-md">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-          </span>
-          <span className="font-semibold text-text-primary">
-            {currentStage === 0 && "01 · THE ICON"}
-            {currentStage === 1 && "02 · PROPULSION ARCHITECTURE"}
-            {currentStage === 2 && "03 · AERODYNAMIC OPTICS"}
-            {currentStage === 3 && "04 · CHASSIS & SUSPENSION"}
-            {currentStage === 4 && "05 · THE HORIZON COCKPIT"}
-            {currentStage === 5 && "06 · 900V HYPERCHARGING"}
-            {currentStage === 6 && "07 · BESPOKE CONFIGURATOR"}
-          </span>
-        </div>
-      </aside>
-
-      {/* ========================================================================= */}
-      {/* 3. SCROLLING STORYTELLING SECTIONS                                        */}
+      {/* 2. SCROLLING STORYTELLING SECTIONS                                        */}
       {/* ========================================================================= */}
 
       {/* SECTION 1: HERO OVERLAY (0% - 12%) */}
@@ -240,7 +196,7 @@ export default function HomeShowcase() {
             className="pointer-events-auto lg:col-span-5 flex flex-col gap-6"
           >
             <div className="inline-flex items-center gap-2 self-start rounded-full border border-accent/30 bg-accent/10 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-accent backdrop-blur-xs">
-              <Zap className="h-3 w-3" /> 02 · PROPULSION ARCHITECTURE
+              <Zap className="h-3 w-3" /> PROPULSION ARCHITECTURE
             </div>
 
             <h2 className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[0.96] tracking-[-0.03em] text-text-primary">
@@ -307,7 +263,7 @@ export default function HomeShowcase() {
             className="pointer-events-auto lg:col-span-5 flex flex-col gap-6"
           >
             <div className="inline-flex items-center gap-2 self-start rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-sky-700 dark:text-sky-300 backdrop-blur-xs">
-              <Lightbulb className="h-3 w-3" /> 03 · AERODYNAMIC FLUIDITY & OPTICS
+              <Lightbulb className="h-3 w-3" /> AERODYNAMIC FLUIDITY & OPTICS
             </div>
 
             <h2 className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[0.96] tracking-[-0.03em] text-text-primary">
@@ -357,7 +313,7 @@ export default function HomeShowcase() {
             className="pointer-events-auto lg:col-span-5 flex flex-col gap-6"
           >
             <div className="inline-flex items-center gap-2 self-start rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 backdrop-blur-xs">
-              <Shield className="h-3 w-3" /> 04 · CHASSIS DYNAMICS & CONTROL
+              <Shield className="h-3 w-3" /> CHASSIS DYNAMICS & CONTROL
             </div>
 
             <h2 className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[0.96] tracking-[-0.03em] text-text-primary">
@@ -402,7 +358,7 @@ export default function HomeShowcase() {
             className="pointer-events-auto lg:col-span-6 flex flex-col gap-6"
           >
             <div className="inline-flex items-center gap-2 self-start rounded-full border border-accent/30 bg-accent/10 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-accent backdrop-blur-xs">
-              <Sparkles className="h-3 w-3" /> 05 · BESPOKE CABIN ATELIER
+              <Sparkles className="h-3 w-3" /> BESPOKE CABIN ATELIER
             </div>
 
             <h2 className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[0.96] tracking-[-0.03em] text-text-primary">
@@ -444,7 +400,7 @@ export default function HomeShowcase() {
             className="pointer-events-auto lg:col-span-5 flex flex-col gap-6"
           >
             <div className="inline-flex items-center gap-2 self-start rounded-full border border-sky-400/30 bg-sky-500/10 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-sky-700 dark:text-sky-300 backdrop-blur-xs">
-              <Zap className="h-3 w-3" /> 06 · ULTRA-FAST HYPERCHARGING
+              <Zap className="h-3 w-3" /> ULTRA-FAST HYPERCHARGING
             </div>
 
             <h2 className="text-[clamp(2.4rem,5.5vw,4.2rem)] font-light leading-[0.96] tracking-[-0.03em] text-text-primary">
@@ -487,7 +443,7 @@ export default function HomeShowcase() {
           className="pointer-events-auto mt-6 flex flex-wrap items-center justify-center gap-4 rounded-full border border-border/80 bg-surface/85 px-6 py-3 shadow-[0_10px_35px_-10px_rgba(0,0,0,0.15)] backdrop-blur-xl"
         >
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent pr-2 border-r border-border/80">
-            07 · BESPOKE STUDIO
+            BESPOKE STUDIO
           </span>
 
           <div className="flex items-center gap-3">
